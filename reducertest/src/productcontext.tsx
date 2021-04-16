@@ -16,4 +16,4 @@ const initState = {
     shoppingCart: 0,
 };
 
-const AppContext = createContext<InitStateType>(initState);vup ej; 
+const AppContext = createContext<InitStateType>(initState);
