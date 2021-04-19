@@ -3,10 +3,16 @@ import ReactDOM from "react-dom";
 import "./index.css";
 import reportWebVitals from "./reportWebVitals";
 import LoginUseReducer from "./LoginUseReducerTypeScript";
+
+import { AppProvider } from "./productcontext";
+import Products from "./Products";
+import ProductList from "./ProductList";
+
 ReactDOM.render(
-    <React.StrictMode>
-        <LoginUseReducer />
-    </React.StrictMode>,
+    <AppProvider>
+        <Products />
+        <ProductList />
+    </AppProvider>,
     document.getElementById("root")
 );
 

@@ -48,6 +48,12 @@ export const productReducer = (state: ProductType[], action: any) => {
     }
 };
 
+export type ShoppingCartPayload = {
+    [Types.Add]: undefined;
+};
+
+export type ShoppingCartActions = ActionMap<ShoppingCartPayload>[keyof ActionMap<ShoppingCartPayload>];
+
 export const shoppingCartReducer = (state: any, action: any) => {
     switch (action.type) {
         case "ADD_PRODUCT":

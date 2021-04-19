@@ -1,5 +1,5 @@
 import React, { createContext, useReducer } from "react";
-import { productReducer, shoppingCartReducer } from "./reducer";
+import { productReducer, shoppingCartReducer, ProductActions, ShoppingCartActions } from "./reducer";
 
 export interface ProductType {
     id: number;
@@ -17,12 +17,15 @@ const initState = {
     shoppingCart: 0,
 };
 
-const AppContext = createContext<{ state: InitStateType; dispatch: React.Dispatch<any> }>({
+const AppContext = createContext<{
+    state: InitStateType;
+    dispatch: React.Dispatch<ProductActions | ShoppingCartActions>;
+}>({
     state: initState,
     dispatch: () => null,
 });
 
-const mainReducer = ({ products, shoppingCart }: { products: ProductType[]; shoppingCart: number }, action: any) => ({
+const mainReducer = ({ products, shoppingCart }: InitStateType, action: ProductActions | ShoppingCartActions) => ({
     products: productReducer(products, action),
     shoppingCart: shoppingCartReducer(shoppingCart, action),
 });
