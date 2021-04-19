@@ -3,10 +3,12 @@ import ReactDOM from "react-dom";
 import "./index.css";
 import reportWebVitals from "./reportWebVitals";
 import LoginUseReducer from "./LoginUseReducerTypeScript";
+import QuestionSettng from "./QuestionSettng";
+import { CreateprojectPageProvider } from "./CreateprojectPagecontext";
 ReactDOM.render(
-    <React.StrictMode>
-        <LoginUseReducer />
-    </React.StrictMode>,
+    <CreateprojectPageProvider>
+        <QuestionSettng />
+    </CreateprojectPageProvider>,
     document.getElementById("root")
 );
 
