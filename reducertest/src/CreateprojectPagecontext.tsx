@@ -2,7 +2,7 @@ import React, { createContext, useReducer, Dispatch } from "react";
 import { QuestionReducer, QuestionActions } from "./CreateprojectPageReducers";
 
 export interface QuestionType {
-    // require_: boolean;
+    require_: boolean;
     type_: string;
     question_text: string;
     // question_options: string[];
