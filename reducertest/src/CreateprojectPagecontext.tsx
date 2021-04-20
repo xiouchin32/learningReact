@@ -5,7 +5,7 @@ export interface QuestionType {
     require_: boolean;
     type_: string;
     question_text: string;
-    // question_options: string[];
+    question_options: string[];
     // default_value: number[];
 }
 

@@ -14,7 +14,10 @@ type ActionMap<M extends { [index: string]: any }> = {
 export enum Types {
     Create = "CREATE_QUESTION",
     Delete = "DELETE_QUESTION",
-    Modified = "MODIFIED",
+    Modified_Questiontext = "MODIFIED_QUESTION_TEXT",
+    Modified_Options = "MODIFIED_QUESTION_OPTIONS",
+    Add_Options = "ADD_OPTIONS",
+    Delete_option = "DELETE_OPTION",
 }
 
 type QuestionPayload = {
@@ -22,23 +25,37 @@ type QuestionPayload = {
         require_: boolean;
         type_: string;
         question_text: string;
-        // question_options: string[];
+        question_options: string[];
         // default_value: number[];
     };
     [Types.Delete]: {
-        index: number;
+        qeustion_index: number;
     };
-    [Types.Modified]: {
+    [Types.Modified_Questiontext]: {
         question_text: string;
-        index: number;
+        qeustion_index: number;
+    };
+    [Types.Modified_Options]: {
+        option_text: string;
+        qeustion_index: number;
+        option_index: number;
+    };
+    [Types.Add_Options]: {
+        qeustion_index: number;
+    };
+    [Types.Delete_option]: {
+        qeustion_index: number;
+        option_index: number;
     };
 };
 
 export type QuestionActions = ActionMap<QuestionPayload>[keyof ActionMap<QuestionPayload>];
 
 export const QuestionReducer = (state: QuestionType[], action: QuestionActions) => {
-    let index: number = 0;
-    let tempstate: any = [];
+    let qeustion_index: number = 0;
+    let option_index: number = 0;
+    let tempstate: QuestionType[] = [];
+    tempstate = state;
     switch (action.type) {
         case "CREATE_QUESTION":
             return [
@@ -47,20 +64,31 @@ export const QuestionReducer = (state: QuestionType[], action: QuestionActions) 
                     require_: action.payload.require_,
                     type_: action.payload.type_,
                     question_text: action.payload.question_text,
-                    // question_options: action.payload.question_options,
+                    question_options: action.payload.question_options,
                     // default_value: action.payload.default_value,
                 },
             ];
         case "DELETE_QUESTION":
-            index = action.payload.index;
-            tempstate = state;
-            tempstate.splice(index, 1);
+            qeustion_index = action.payload.qeustion_index;
+            tempstate.splice(qeustion_index, 1);
             return tempstate;
-        case "MODIFIED":
-            index = action.payload.index;
-            tempstate = state;
-            tempstate[index].question_text = action.payload.question_text;
-            console.log(tempstate);
+        case "MODIFIED_QUESTION_TEXT":
+            qeustion_index = action.payload.qeustion_index;
+            tempstate[qeustion_index].question_text = action.payload.question_text;
+            return tempstate;
+        case "MODIFIED_QUESTION_OPTIONS":
+            qeustion_index = action.payload.qeustion_index;
+            option_index = action.payload.option_index;
+            tempstate[qeustion_index].question_options[option_index] = action.payload.option_text;
+            return tempstate;
+        case "ADD_OPTIONS":
+            qeustion_index = action.payload.qeustion_index;
+            tempstate[qeustion_index].question_options.push("");
+            return tempstate;
+        case "DELETE_OPTION":
+            qeustion_index = action.payload.qeustion_index;
+            option_index = action.payload.option_index;
+            tempstate[qeustion_index].question_options.splice(option_index, 1);
             return tempstate;
         default:
             return state;
