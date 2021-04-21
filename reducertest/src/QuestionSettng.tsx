@@ -27,27 +27,16 @@ const QuestionSettng = () => {
     };
 
     const createProduct = () => {
-        if (Dicom_option.type_ !== "text") {
-            dispatch({
-                type: Types.Create,
-                payload: {
-                    require_: Dicom_option.require_,
-                    type_: Dicom_option.type_,
-                    question_text: "",
-                    question_options: [],
-                    default_value: [],
-                },
-            });
-        } else {
-            dispatch({
-                type: Types.Create,
-                payload: {
-                    require_: Dicom_option.require_,
-                    type_: Dicom_option.type_,
-                    question_text: "",
-                },
-            });
-        }
+        dispatch({
+            type: Types.Create,
+            payload: {
+                require_: Dicom_option.require_,
+                type_: Dicom_option.type_,
+                question_text: "",
+                question_options: [],
+                default_value: [],
+            },
+        });
     };
 
     const deleteQuestion = (index: number) => {
@@ -87,10 +76,10 @@ const QuestionSettng = () => {
         setRequire(status);
     };
     const add_select_option = (type: string, idx: number) => {
-        let option_text = (document.getElementById("select_option") as HTMLInputElement).value;
+        let option_text = (document.getElementById("select_option_" + idx) as HTMLInputElement).value;
         if (option_text !== "") {
             add_option(idx, option_text);
-            (document.getElementById("select_option") as HTMLInputElement).value = "";
+            (document.getElementById("select_option_" + idx) as HTMLInputElement).value = "";
         } else {
             alert("請輸入選項名稱");
         }
@@ -129,15 +118,15 @@ const QuestionSettng = () => {
             });
         } else {
             //chcekbox
-            let temp_option: number[] | undefined;
-            if (state.Question[questionidx].default_value) temp_option = state.Question[questionidx]!.default_value;
+            let temp_option: number[] = [];
+            if (state.Question[questionidx].default_value) temp_option = state.Question[questionidx].default_value;
             if (event.checked) {
                 //checked === true add option
-                temp_option!.push(option_index);
+                temp_option.push(option_index);
                 console.log(temp_option);
             } else {
                 console.log(option_index);
-                temp_option = temp_option!.filter((item) => item !== option_index);
+                temp_option = temp_option.filter((item) => item !== option_index);
                 console.log(temp_option);
             }
             if (temp_option) {
@@ -177,7 +166,7 @@ const QuestionSettng = () => {
             >
                 <option value="radio">單選</option>
                 <option value="checkbox">複選</option>
-                <option value="text">文字框</option>
+                <option value="textarea">文字框</option>
                 <option value="select">下拉選單</option>
             </select>
             <button onClick={createProduct}>新增</button>
@@ -186,14 +175,14 @@ const QuestionSettng = () => {
                     <div>
                         {/* quetion_text */}
                         <input
-                            type="text"
+                            type="textarea"
                             onChange={(e) => {
                                 modifyQuestion("question_text", e.target.value, questionidx);
                             }}
                             value={quetion_list.question_text}
                         />
                         {/* quetion_option */}
-                        {quetion_list.type_ === "text" ? (
+                        {quetion_list.type_ === "textarea" ? (
                             <div>
                                 <input type="textarea" placeholder="讓使用者輸入" readOnly />
                             </div>
@@ -236,7 +225,7 @@ const QuestionSettng = () => {
                             </div>
                         ) : (
                             <div>
-                                <input type="textarea" placeholder="選項名稱" id="select_option" />
+                                <input type="textarea" placeholder="選項名稱" id={"select_option_" + questionidx} />
                                 <button onClick={() => add_select_option(quetion_list.type_, questionidx)}>
                                     add option
                                 </button>
