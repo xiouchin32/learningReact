@@ -43,6 +43,7 @@ type QuestionPayload = {
     };
     [Types.Add_Options]: {
         qeustion_index: number;
+        qeustion_text: string;
     };
     [Types.Delete_option]: {
         qeustion_index: number;
@@ -99,7 +100,7 @@ export const QuestionReducer = (state: QuestionType[], action: QuestionActions) 
             return tempstate;
         case "ADD_OPTIONS":
             qeustion_index = action.payload.qeustion_index;
-            tempstate[qeustion_index].question_options!.push("");
+            tempstate[qeustion_index].question_options!.push(action.payload.qeustion_text);
             return tempstate;
         case "DELETE_OPTION":
             qeustion_index = action.payload.qeustion_index;
@@ -109,20 +110,6 @@ export const QuestionReducer = (state: QuestionType[], action: QuestionActions) 
         case "ADD_DEFAULT":
             qeustion_index = action.payload.qeustion_index;
             tempstate[qeustion_index].default_value = action.payload.choose_index;
-            // if (tempstate[qeustion_index].type_ === "radio") {
-            //     tempstate[qeustion_index].default_value![0] = action.payload.choose_index;
-            //     console.log(tempstate[qeustion_index].default_value);
-            // } else {
-            //     let index = tempstate[qeustion_index].default_value?.indexOf(action.payload.choose_index);
-            //     if (index !== undefined && index > -1) {
-            //         console.log(action.payload.choose_index);
-            //         tempstate[qeustion_index].default_value!.filter((index) => index !== action.payload.choose_index);
-            //         console.log(tempstate[qeustion_index].default_value);
-            //     } else if (index !== undefined && index === -1) {
-            //         tempstate[qeustion_index].default_value!.push(action.payload.choose_index);
-            //         console.log(tempstate[qeustion_index].default_value);
-            //     }
-            // }
             return tempstate;
         default:
             return state;

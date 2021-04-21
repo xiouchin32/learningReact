@@ -86,12 +86,22 @@ const QuestionSettng = () => {
         handleQuestion("require_", status);
         setRequire(status);
     };
+    const add_select_option = (type: string, idx: number) => {
+        let option_text = (document.getElementById("select_option") as HTMLInputElement).value;
+        if (option_text !== "") {
+            add_option(idx, option_text);
+            (document.getElementById("select_option") as HTMLInputElement).value = "";
+        } else {
+            alert("請輸入選項名稱");
+        }
+    };
 
-    const add_option = (idx: number) => {
+    const add_option = (idx: number, text: string) => {
         dispatch({
             type: Types.Add_Options,
             payload: {
                 qeustion_index: idx,
+                qeustion_text: text,
             },
         });
     };
@@ -174,6 +184,7 @@ const QuestionSettng = () => {
             <div style={{ marginTop: 20 }}>
                 {state.Question.map((quetion_list: any, questionidx: number) => (
                     <div>
+                        {/* quetion_text */}
                         <input
                             type="text"
                             onChange={(e) => {
@@ -181,7 +192,12 @@ const QuestionSettng = () => {
                             }}
                             value={quetion_list.question_text}
                         />
-                        {quetion_list.type_ === "radio" || quetion_list.type_ === "checkbox" ? (
+                        {/* quetion_option */}
+                        {quetion_list.type_ === "text" ? (
+                            <div>
+                                <input type="textarea" placeholder="讓使用者輸入" readOnly />
+                            </div>
+                        ) : quetion_list.type_ === "radio" || quetion_list.type_ === "checkbox" ? (
                             <div>
                                 {quetion_list.question_options.map((option: any, optionidx: number) => {
                                     return (
@@ -216,14 +232,15 @@ const QuestionSettng = () => {
                                         </div>
                                     );
                                 })}
-                                <button onClick={() => add_option(questionidx)}>add option</button>
-                            </div>
-                        ) : quetion_list.type_ === "text" ? (
-                            <div>
-                                <input type="textarea" placeholder="讓使用者輸入" readOnly />
+                                <button onClick={() => add_option(questionidx, "")}>add option</button>
                             </div>
                         ) : (
-                            <></>
+                            <div>
+                                <input type="textarea" placeholder="選項名稱" id="select_option" />
+                                <button onClick={() => add_select_option(quetion_list.type_, questionidx)}>
+                                    add option
+                                </button>
+                            </div>
                         )}
                         <button onClick={() => deleteQuestion(questionidx)}>delete</button>
                     </div>
