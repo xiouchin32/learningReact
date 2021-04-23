@@ -13,7 +13,6 @@ const QuestionSettng = () => {
     });
     //Reqire : true false
     const [Require, setRequire] = useState<boolean>(true);
-    const [optionnumber, setoptionnumber] = useState<number>(1);
     //context
     const { state, dispatch } = React.useContext(CreateprojectPagecontext);
 
@@ -123,11 +122,8 @@ const QuestionSettng = () => {
             if (event.checked) {
                 //checked === true add option
                 temp_option.push(option_index);
-                console.log(temp_option);
             } else {
-                console.log(option_index);
                 temp_option = temp_option.filter((item) => item !== option_index);
-                console.log(temp_option);
             }
             if (temp_option) {
                 dispatch({
