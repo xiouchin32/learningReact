@@ -1,0 +1,60 @@
+{
+    "dicom_options":[{
+        "default_value": [0],
+        "question_options":  ["A-標準片", "B-不良片", "C-廢片"],
+        "question_text": "影像品質",
+        "require_": true,
+        "type_": "radio"},
+        {
+        "default_value": [],
+        "question_options": ["Normal", "不標記"],
+        "question_text": "影像狀態",
+        "require_": true,
+        "type_": "radio"
+        },
+{
+    "default_value": [],
+    "question_options": ["R", "L", "B"],
+    "question_text": "R/L",
+    "require_": true,
+    "type_": "radio"
+},
+{
+    "default_value": [],
+    "question_options": ["A", "V", "C"],
+    "question_text": "test1",
+    "require_": true,
+    "type_": "checkbox"
+}],
+label_options: Array(2)
+0: {require_: false, type_: "radio", question_text: "信心指數", question_options: Array(2), default_value: Array(0)}
+1: {require_: false, type_: "radio", question_text: "SSS", question_options: Array(3), default_value: Array(0)}
+length: 2
+__proto__: Array(0)
+labels: Array(3)
+0:
+confident_field: false
+custom_category: "as"
+label: [{…}]
+mode: 1
+__proto__: Object
+1:
+confident_field: false
+custom_category: "a"
+label: [{…}]
+mode: 2
+__proto__: Object
+2:
+confident_field: false
+custom_category: "heart failure"
+label: [{…}]
+mode: 4
+__proto__: Object
+length: 3
+__proto__: Array(0)
+title:
+icon: ""
+name: "test"
+name_ch: "test"
+type: true
+}
